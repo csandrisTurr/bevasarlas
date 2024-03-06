@@ -10,5 +10,5 @@ const contentModel = defineModel('content');
         name=""
         id=""
         v-model="contentModel"
-        \>
+        >
 </template>
