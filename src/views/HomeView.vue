@@ -3,6 +3,13 @@
 
 <template>
   <main>
-    szake bun dona reee
+    <table>
+  <tr>
+    <th>ID</th>
+    <th>Category</th>
+    <th>Product Name</th>
+    <th>Price</th>
+  </tr>
+</table>
   </main>
 </template>
