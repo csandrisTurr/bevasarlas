@@ -3,6 +3,7 @@
 
 <template>
   <main>
-    <TheWelcome />
+    szake bun dona reee
+    
   </main>
 </template>
