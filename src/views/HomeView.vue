@@ -23,12 +23,4 @@
 section {
   @apply flex flex-col gap-2;
 }
-
-.field {
-  @apply flex flex-col gap-1 w-1/6;
-
-  & > span {
-    @apply font-medium;
-  }
-}
 </style>
