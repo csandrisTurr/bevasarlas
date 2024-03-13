@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 var mysql = require('mysql');
+var cors = require('cors')
 const app = express();
 const port = process.env.PORT;
 
@@ -14,6 +15,7 @@ var pool  = mysql.createPool({
 
 // MIDDLEWARES 
 app.use(express.urlencoded({extended: true}));
+app.use(cors())
 app.use(express.json());
 
 app.get('/', function (req, res) {

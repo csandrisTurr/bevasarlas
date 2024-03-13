@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+
+let bevasarloLista = ref([]);
+</script>
 
 <template>
   <main class="overflow-auto">
@@ -12,6 +17,12 @@
             <th>Category</th>
             <th>Product Name</th>
             <th>Price</th>
+          </tr>
+          <tr v-for="listaElem in bevasarloLista">
+            <th>{{ listaElem.id }}</th>
+            <th>{{ listaElem.category }}</th>
+            <th>{{ listaElem.productname }}</th>
+            <th>{{ listaElem.price }} Ft</th>
           </tr>
         </table>
       </section>

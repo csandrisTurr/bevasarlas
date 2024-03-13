@@ -2,6 +2,13 @@
 import ComboBox from '@/components/ComboBox.vue';
 import NumericUpDown from '@/components/NumericUpDown.vue';
 import Button from '@/components/Button.vue';
+import { ref, onMounted, Ref, computed } from 'vue';
+
+let bevasarloLista: Ref<Array<unknown>> = ref([]);
+
+const kategoriaText = ref('');
+const termekText = ref('');
+const mennyisegText = ref('');
 </script>
 
 <template>
@@ -10,15 +17,21 @@ import Button from '@/components/Button.vue';
         <div class="fields flex gap-4 justify-stretch w-3/6 max-md:w-full">
           <span>
             <span>Kategoria</span>
-            <ComboBox></ComboBox>
+            <ComboBox
+              v-model="kategoriaText"
+              :values="kategoriak"
+              name="kategoria" />
           </span>
           <span>
             <span>Termek</span>
-            <ComboBox></ComboBox>
+            <ComboBox
+              v-model="termekText"
+              :values="termekek"
+              name="termek" />
           </span>
           <span>
             <span>Mennyiseg</span>
-            <NumericUpDown></NumericUpDown>
+            <NumericUpDown v-model="mennyisegText" />
           </span>
         </div>
         <div class="labels flex gap-4 justify-evenly w-2/6 max-md:w-full max-md:justify-around">
@@ -38,7 +51,7 @@ import Button from '@/components/Button.vue';
         <div class="flex flex-col gap-1 max-md:w-full lg-max-w-[200px] w-1/6">
           <span class="flex flex-col justify-end w-full">
             <span class="max-md:hidden">⠀</span>
-            <Button class="material-symbols-outlined text-center h-max flex-grow">add</Button>
+            <Button @click="add" class="material-symbols-outlined text-center h-max flex-grow">add</Button>
           </span>
         </div>
       </div>

@@ -3,7 +3,7 @@ const props = defineProps({
   text: String,
   can_go_negative: Boolean,  
 });
-const contentModel = defineModel(['content'])
+const contentModel = defineModel()
 
 function up() {
     const input = document.getElementById('input');

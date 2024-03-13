@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps(['text']);
-const contentModel = defineModel('content');
+const contentModel = defineModel();
 </script>
 
 <template>
