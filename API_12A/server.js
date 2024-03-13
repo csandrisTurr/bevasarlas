@@ -24,35 +24,36 @@ app.get('/', function (req, res) {
 //  ENDPOINTS 
 // ---------------------------
 
-// Employees table
+// Bevasarlolista
 // ------------------------------------------
 // GET all employees
-app.get('/employees', (req, res)=>{
-    pool.query(`SELECT * FROM employees`, (error, results) => {
+app.get('/bevasarlolista', (req, res)=>{
+    pool.query(`SELECT * FROM mock_data`, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
 });
 
 // GET one employee by PK
-app.get('/employees/:pk', (req, res)=>{
+/*app.get('/employees/:pk', (req, res)=>{
     let pk = req.params.pk;
     pool.query(`SELECT * FROM employees WHERE ID=?`, pk, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
-});
+});*/
 
 // POST new employee
-app.post('/employees', (req, res)=>{
+app.post('/bevasarlolistaAdat', (req, res)=>{
     let data = req.body;
-    pool.query(`INSERT INTO employees VALUES(null, '${data.name}', '${data.address}', '${data.phone}', '${data.email}', '${data.post}', ${data.price})`, (error, results) => {
+    pool.query(`INSERT INTO mock_data VALUES(null, '${data.category}', '${data.productname}', '${data.price}')`, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
 });
 
 // PATCH one employee by PK
+/*
 app.patch('/employees/:pk', (req, res)=>{
     let pk = req.params.pk;
     let data = req.body;
@@ -61,8 +62,10 @@ app.patch('/employees/:pk', (req, res)=>{
         res.status(200).send(results);
     });
 });
+*/
 
 // DELETE one employee by PK
+/*
 app.delete('/employees/:pk', (req, res)=>{
     let pk = req.params.pk;
     pool.query(`DELETE FROM employees WHERE ID=?`, pk, (error, results) => {
@@ -70,6 +73,7 @@ app.delete('/employees/:pk', (req, res)=>{
         res.status(200).send(results);
     });
 });
+*/
 
 // Worktimes table
 // ------------------------------------------
@@ -85,5 +89,5 @@ app.delete('/employees/:pk', (req, res)=>{
 
 
 app.listen(port, ()=>{
-    console.log(`Server listening on port: ${port}...`);
+    console.log(`Server hallgatozik on port: ${port}...`);
 });
