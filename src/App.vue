@@ -5,7 +5,7 @@ import BottomBar from './components/BottomBar.vue';
 
 <template>
   <RouterView class="page" />
-  <BottomBar class="bottombar"/>
+  <BottomBar class="bottombar" />
 </template>
 
 <style scoped>

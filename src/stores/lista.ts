@@ -1,14 +1,24 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { ref, computed, type Ref } from 'vue';
+import { defineStore } from 'pinia';
 import axios from 'axios';
+import { v4 } from 'uuid';
 
-export const useListStore = defineStore('list', () => {
-  const lista = ref([]);
-  const kategoriak = computed(() => lista.value.map(x => x.category))
-  const termekek = computed(() => lista.value.find(x => x.category == lista.value).map(x => x.productname));
+export interface ListaElem {
+  uuid: string;
+  category: string;
+  productname: string;
+  count: string;
+}
 
-  axios.get('http://localhost:3000/bevasarlolista')
-    .then(x => lista.value = x.data);
+export const useListaStore = defineStore('lista', () => {
+  const lista: Ref<Array<ListaElem>> = ref([]);
+  function add(val: ListaElem) {
+    val.uuid = v4();
+    lista.value.push(val);
+  }
+  function del(uuid: string) {
+    lista.value = lista.value.filter(x => x.uuid != uuid);
+  }
 
-  return { lista, kategoriak, termekek }
-})
+  return { lista, add, del };
+});
