@@ -1,16 +1,16 @@
 require('dotenv').config();
 const express = require('express');
-var mysql = require('mysql');
-var cors = require('cors')
+const cors = require('cors');
+const sqlite = require('sqlite3');
+
 const app = express();
 const port = process.env.PORT;
 
-var pool  = mysql.createPool({
-    connectionLimit : 10,
-    host            : process.env.DBHOST,
-    user            : process.env.DBUSER,
-    password        : process.env.DBPASS,
-    database        : process.env.DBNAME
+const pool = new sqlite.Database('db.sqlite3');
+
+pool.on('connection', function(err) {
+    if (err) throw err;
+    console.log("Connected!");
 });
 
 // MIDDLEWARES 
@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 // ------------------------------------------
 // GET all employees
 app.get('/bevasarlolista', (req, res)=>{
-    pool.query(`SELECT * FROM mock_data`, (error, results) => {
+    pool.all(`SELECT * FROM mock_data`, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
@@ -39,7 +39,7 @@ app.get('/bevasarlolista', (req, res)=>{
 // GET one employee by PK
 /*app.get('/employees/:pk', (req, res)=>{
     let pk = req.params.pk;
-    pool.query(`SELECT * FROM employees WHERE ID=?`, pk, (error, results) => {
+    pool.run(`SELECT * FROM employees WHERE ID=?`, pk, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
@@ -48,7 +48,7 @@ app.get('/bevasarlolista', (req, res)=>{
 // POST new employee
 app.post('/bevasarlolistaAdat', (req, res)=>{
     let data = req.body;
-    pool.query(`INSERT INTO mock_data VALUES(null, '${data.category}', '${data.productname}', '${data.price}')`, (error, results) => {
+    pool.run(`INSERT INTO mock_data VALUES(null, '${data.category}', '${data.productname}', '${data.price}')`, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
@@ -59,7 +59,7 @@ app.post('/bevasarlolistaAdat', (req, res)=>{
 app.patch('/employees/:pk', (req, res)=>{
     let pk = req.params.pk;
     let data = req.body;
-    pool.query(`UPDATE employees SET name='${data.name}', address='${data.address}', phone='${data.phone}', email='${data.email}', post='${data.post}', price=${data.price} WHERE ID=?`, pk, (error, results) => {
+    pool.run(`UPDATE employees SET name='${data.name}', address='${data.address}', phone='${data.phone}', email='${data.email}', post='${data.post}', price=${data.price} WHERE ID=?`, pk, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });
@@ -70,7 +70,7 @@ app.patch('/employees/:pk', (req, res)=>{
 /*
 app.delete('/employees/:pk', (req, res)=>{
     let pk = req.params.pk;
-    pool.query(`DELETE FROM employees WHERE ID=?`, pk, (error, results) => {
+    pool.run(`DELETE FROM employees WHERE ID=?`, pk, (error, results) => {
         if (error) res.status(500).send(error);
         res.status(200).send(results);
     });

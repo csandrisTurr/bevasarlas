@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `mock_data` (
-  `id` int(11) NOT NULL,
-  `category` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
-  `productname` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `category` varchar(30) NOT NULL,
+  `productname` varchar(30) NOT NULL,
   `price` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+);
 
 --
 -- A tábla adatainak kiíratása `mock_data`
@@ -140,27 +140,6 @@ INSERT INTO `mock_data` (`id`, `category`, `productname`, `price`) VALUES
 (98, 'meat', 'rice', 3332),
 (99, 'vegetables', 'garlic bread', 1948),
 (100, 'beverages', 'xiao long bao', 1019);
-
---
--- Indexek a kiírt táblákhoz
---
-
---
--- A tábla indexei `mock_data`
---
-ALTER TABLE `mock_data`
-  ADD PRIMARY KEY (`id`);
-
---
--- A kiírt táblák AUTO_INCREMENT értéke
---
-
---
--- AUTO_INCREMENT a táblához `mock_data`
---
-ALTER TABLE `mock_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
