@@ -4,6 +4,7 @@ import BottomBar from './components/BottomBar.vue';
 </script>
 
 <template>
+  <div class="modalContainer"></div>
   <RouterView class="page" />
   <BottomBar class="bottombar" />
 </template>

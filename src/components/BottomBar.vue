@@ -11,30 +11,33 @@ const listaStore = useListaStore();
 
 const kategoriaText = ref('');
 const termekText = ref('');
-const mennyisegText = ref('');
+const mennyisegText = ref('0');
 const reszosszeg = ref(0);
-const vegosszeg = ref(0);
 
-watch(mennyisegText, (olds: string, news: string) => {
-  reszosszeg.value = termekStore.ar(kategoriaText.value, termekText.value) * parseInt(olds || '0');
-});
-
-function add() {
-  listaStore.add({
-    category: kategoriaText.value,
-    productname: termekText.value,
-    count: mennyisegText.value,
-  });
-  vegosszeg.value = getVegosszeg();
+function updateReszosszeg() {
+  reszosszeg.value = termekStore.ar(kategoriaText.value, termekText.value) * parseInt(mennyisegText.value || '0') || '0';
 }
 
-function getVegosszeg(): number {
-  let sum = 0;
-  listaStore.lista.forEach(x => {
-    sum += termekStore.ar(x.category, x.productname) * x.count
-  })
+watch(mennyisegText, (olds: string, news: string) => updateReszosszeg());
+watch(termekText, (olds: string, news: string) => updateReszosszeg());
 
-  return sum;
+function add() {
+  if (
+    !kategoriaText.value ||
+    !termekText.value ||
+    mennyisegText.value == '0'
+  ) return;
+
+  listaStore.add({
+    productId: termekStore.findProductId(kategoriaText.value, termekText.value)!,
+    category: kategoriaText.value,
+    productname: termekText.value,
+    count: parseInt(mennyisegText.value),
+  });
+
+  kategoriaText.value = '';
+  termekText.value = '';
+  mennyisegText.value = '0';
 }
 </script>
 
@@ -65,7 +68,7 @@ function getVegosszeg(): number {
         <span class="field">
           <span>Vegosszeg</span>
           <span class="label">
-            <span>{{ vegosszeg }} Ft</span>
+            <span>{{ listaStore.vegosszeg }} Ft</span>
           </span>
         </span>
       </div>

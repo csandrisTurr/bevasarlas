@@ -15,8 +15,12 @@ export const useTermekStore = defineStore('termek', () => {
   const termekek = (kategoria: string) => lista.value.filter((x) => x.category == kategoria)?.map((x) => x.productname);
   const ar = (kategoria: string, termek: string) =>
     lista.value.find((x) => x.category == kategoria && x.productname == termek)?.price;
+  
+  function findProductId(kategoria: string, termek: string) {
+    return lista.value.find((x) => x.category == kategoria && x.productname == termek)?.id;
+  }
 
   axios.get('http://localhost:3000/bevasarlolista').then((x) => (lista.value = x.data));
 
-  return { lista, kategoriak, termekek, ar };
+  return { lista, kategoriak, termekek, ar, findProductId };
 });
